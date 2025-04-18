@@ -12,7 +12,14 @@ struct PasteCommand: ParsableCommand {
         abstract: "Extract an image from the clipboard"
     )
 
-    @Option(name: .shortAndLong, help: ArgumentHelp("Output file path. Writes to standard output if omitted. Automatically adds the correct file extension if omitted.", valueName: "file"))
+    @Option(
+        name: .shortAndLong,
+        help: ArgumentHelp(
+            "Output file path. Writes to standard output if omitted. " +
+                "Automatically adds the correct file extension if omitted.",
+            valueName: "file"
+        )
+    )
     var output: String?
 
     @Flag(name: .shortAndLong, help: ArgumentHelp("Show image metadata."))
