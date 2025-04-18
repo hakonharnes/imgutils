@@ -1,6 +1,8 @@
 import ArgumentParser
 import Common
 
+let VERSION = "0.1.0"
+
 @main
 struct CopyCommand: ParsableCommand {
     static let configuration = CommandConfiguration(
@@ -8,10 +10,19 @@ struct CopyCommand: ParsableCommand {
         abstract: "Copy an image to the clipboard"
     )
 
-    @Option(name: .shortAndLong)
+    @Option(
+        name: .shortAndLong,
+        help: ArgumentHelp("Input file path. Reads from standard input if omitted.", valueName: "file")
+    )
     var input: String?
 
+    @Flag(name: [.customShort("V"), .long], help: ArgumentHelp("Show the version."))
+    var version = false
+
     func run() throws {
-        print("CopyCommand stub. input: \(input ?? "none")")
+        if version {
+            print(VERSION)
+            return
+        }
     }
 }
