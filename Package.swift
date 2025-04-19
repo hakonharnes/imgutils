@@ -21,7 +21,8 @@ let package = Package(
             name: "Common",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            ]
+            ],
+            path: "Sources/Common"
         ),
         .executableTarget(
             name: "PasteCommand",

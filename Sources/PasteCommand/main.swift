@@ -5,8 +5,6 @@ let VERSION = "0.1.0"
 
 @main
 struct PasteCommand: ParsableCommand {
-    static let version = "0.1.0"
-
     static let configuration = CommandConfiguration(
         commandName: "imgpaste",
         abstract: "Extract an image from the clipboard"
@@ -35,6 +33,11 @@ struct PasteCommand: ParsableCommand {
         if version {
             print(VERSION)
             return
+        }
+
+        let data = try Pasteboard.readImages()
+        for (image, ext) in data {
+            print(image, ext)
         }
     }
 }
