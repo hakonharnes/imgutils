@@ -42,12 +42,22 @@ struct PasteCommand: ParsableCommand {
             return
         }
 
-        if isTTY() && output == nil && stdout == false {
+        if isTTY() && info == false && output == nil && stdout == false {
             print("Error: Refusing to write binary data to a terminal. Use --stdout to force.")
             return
         }
 
         for (image, ext) in data {
+            if info {
+                if let metadata = Pasteboard.getMetadata(from: image) {
+                    print("Format: \(ext)")
+                    print(metadata)
+                    print()
+                }
+
+                continue
+            }
+
             if let output {
                 try Filesystem.writeImage(data: image, ext: ext, to: output)
             } else {

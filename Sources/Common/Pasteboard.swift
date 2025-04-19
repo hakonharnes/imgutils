@@ -38,4 +38,16 @@ public enum Pasteboard {
     }
 
     public static func writeImage(_ data: Data) throws {}
+
+    public static func getMetadata(from data: Data) -> [CFString: Any]? {
+        if
+            let src = CGImageSourceCreateWithData(data as CFData, nil),
+            let props = CGImageSourceCopyPropertiesAtIndex(src, 0, nil)
+            as? [CFString: Any]
+        {
+            return props
+        }
+
+        return nil
+    }
 }
