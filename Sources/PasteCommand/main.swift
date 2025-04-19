@@ -1,5 +1,6 @@
 import ArgumentParser
 import Common
+import Foundation
 
 let VERSION = "0.1.0"
 
@@ -35,9 +36,23 @@ struct PasteCommand: ParsableCommand {
             return
         }
 
-        let data = try Pasteboard.readImages()
+        let data = Pasteboard.readImages()
+        if data.isEmpty {
+            print("Error: No image data found in the clipboard.")
+            return
+        }
+
+        if isTTY() && output == nil && stdout == false {
+            print("Error: Refusing to write binary data to a terminal. Use --stdout to force.")
+            return
+        }
+
         for (image, ext) in data {
-            print(image, ext)
+            if let output {
+                try Filesystem.writeImage(data: image, ext: ext, to: output)
+            } else {
+                FileHandle.standardOutput.write(image)
+            }
         }
     }
 }

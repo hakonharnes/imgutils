@@ -2,7 +2,7 @@ import AppKit
 import UniformTypeIdentifiers
 
 public enum Pasteboard {
-    public static func readImages() throws -> [(Data, String)] {
+    public static func readImages() -> [(Data, String)] {
         var data: [(Data, String)] = []
         let pasteboard = NSPasteboard.general
 

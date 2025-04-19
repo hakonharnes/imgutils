@@ -21,6 +21,16 @@ public enum Filesystem {
         return try (Data(contentsOf: url), ext)
     }
 
+    public static func writeImage(data: Data, ext: String, to path: String) throws {
+        var fileURL = URL(fileURLWithPath: path)
+        if fileURL.pathExtension.isEmpty {
+            fileURL = fileURL.appendingPathExtension(ext)
+        }
+
+        // TODO: Better error handling
+        try data.write(to: fileURL, options: .atomic)
+    }
+
     private static func getPreferredExtension(for url: URL) -> String? {
         if let type = try? url.resourceValues(forKeys: [.contentTypeKey]).contentType,
            let ext = type.preferredFilenameExtension
